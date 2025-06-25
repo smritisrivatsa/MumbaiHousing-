@@ -1,6 +1,7 @@
-# loading the dataset
-
+# Data Preprocessing
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
 from sklearn.preprocessing import MinMaxScaler
 df = pd.read_csv('mumbai_housing_prices.csv')
 
@@ -24,6 +25,11 @@ def category(row):
         return 'High'
     
 df['price_bin'] = df.apply(category,  axis=1)
+
+
+for col in ['type', 'status', 'region']:
+    le = LabelEncoder()
+    df[col + '_encoded'] = le.fit_transform(df[col])
 
 scaler = MinMaxScaler()
 df[['area_scaled', 'bhk_scaled']] = scaler.fit_transform(df[['area', 'bhk']])
