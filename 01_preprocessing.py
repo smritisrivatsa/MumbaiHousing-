@@ -1,6 +1,7 @@
 # loading the dataset
 
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 df = pd.read_csv('mumbai_housing_prices.csv')
 
 # convert price to INR
@@ -24,4 +25,6 @@ def category(row):
     
 df['price_bin'] = df.apply(category,  axis=1)
 
+scaler = MinMaxScaler()
+df[['area_scaled', 'bhk_scaled']] = scaler.fit_transform(df[['area', 'bhk']])
 df.to_csv('mumbai_housing_prices_modified.csv', index=False)
