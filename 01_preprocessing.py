@@ -22,4 +22,6 @@ def category(row):
     else:
         return 'High'
     
-df['price_bin'] = df.apply(category, axis = 1)
+df['price_bin'] = df.apply(category,  axis=1)
+
+df.to_csv('mumbai_housing_prices_modified.csv', index=False)
