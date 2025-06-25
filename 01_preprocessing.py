@@ -1,7 +1,17 @@
 # loading the dataset
+
 import pandas as pd
 df = pd.read_csv('Mumbai Housing Price.csv')
-# converting price units
+
+# convert price to INR
+def convert_price(row):
+    if row['price_unit'] == 'L':
+        return row['price'] * 1e5
+    elif row['price_unit'] == 'Cr':
+        return row['price'] * 1e7
+    return None
+
+df['price_INR'] = df.apply(convert_price, axis = 1)
 
 # creating categories
 def category(p):
@@ -13,4 +23,3 @@ def category(p):
         return 'High'
     
 df['price_bin'] = df['price_INR'].apply(category, axis = 1)
-
