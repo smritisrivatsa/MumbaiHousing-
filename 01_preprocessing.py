@@ -1,6 +1,7 @@
-# loading the dataset
-
+# Data Preprocessing
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
 df = pd.read_csv('mumbai_housing_prices.csv')
 
 # convert price to INR
@@ -23,5 +24,10 @@ def category(row):
         return 'High'
     
 df['price_bin'] = df.apply(category,  axis=1)
+
+
+for col in ['type', 'status', 'region']:
+    le = LabelEncoder()
+    df[col + '_encoded'] = le.fit_transform(df[col])
 
 df.to_csv('mumbai_housing_prices_modified.csv', index=False)
